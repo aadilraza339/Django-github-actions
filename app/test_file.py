@@ -3,6 +3,7 @@ from app.models import Contact
 from app.views import contact_list_view 
 from django.urls import reverse
 from django.test import RequestFactory
+from django.urls import reverse, resolve
 
 
 @pytest.mark.django_db #give test access to database  
@@ -23,3 +24,9 @@ def test_view():
     request = RequestFactory().get(path) # get the path for the list of contacts
     response = contact_list_view(request)
     assert response.status_code == 200 # assert status code from requesting the view is 200(OK success status response code)
+
+
+def test_url():            
+    path = reverse('contact_list')
+    print(path)     
+    assert resolve(path).view_name == "contact_list"
